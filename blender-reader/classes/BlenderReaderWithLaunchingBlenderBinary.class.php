@@ -40,6 +40,27 @@ def list_missing_files():
 			pass
 	return ret
 
+def can_use_tile():
+	use_denoising = False
+	for layer in bpy.context.scene.view_layers:
+		if layer.cycles.use_denoising == True:
+			use_denoising = True
+			break
+	
+	if use_denoising == True:
+		return False
+	
+	if not bpy.context.scene.render.use_compositing:
+		return True
+	
+	# no nodes
+	if bpy.context.scene.node_tree is None or bpy.context.scene.node_tree.nodes is None or len(bpy.context.scene.node_tree.nodes.items()) == 0:
+		return True
+
+	# todo check if there is active compositing node
+	
+	return False
+
 def get_samples():
 	if bpy.context.scene.cycles.progressive == 'PATH':
 		return bpy.context.scene.cycles.samples
@@ -76,6 +97,7 @@ info['resolution_percentage'] = str(bpy.context.scene.render.resolution_percenta
 info['resolution_x'] = str(bpy.context.scene.render.resolution_x)
 info['resolution_y'] = str(bpy.context.scene.render.resolution_y)
 info['framerate'] = str(bpy.context.scene.render.fps / bpy.context.scene.render.fps_base)
+info['can_use_tile'] = str(can_use_tile())
 info['missing_files'] = list_missing_files()
 info['have_camera'] = bpy.context.scene.camera != None
 info['scripted_driver'] = str(list_scripted_driver())
@@ -89,6 +111,7 @@ f.write(json.dumps(info, separators=(',',':')))
 f.close()
 
 sys.exit(0)";
+
 	protected $path;
 	protected $file;
 	protected $gzipped;
