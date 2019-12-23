@@ -14,6 +14,35 @@ import blendfile
 import sys
 import json
 
+def imtype_to_file_extension(i):
+	switcher={
+		0:'.tga',
+		4:'.jpg',
+		##define R_IMF_IMTYPE_IRIZ 7
+		##define R_IMF_IMTYPE_RAWTGA 14
+		##define R_IMF_IMTYPE_AVIRAW 15
+		16: '.avi',
+		17: '.png',
+		#/* #define R_IMF_IMTYPE_AVICODEC    18 */ /* avicodec is nomore */
+		#/* #define R_IMF_IMTYPE_QUICKTIME   19 */ /* quicktime is nomore */
+		20: '.bmp',
+		##define R_IMF_IMTYPE_RADHDR 21
+		##define R_IMF_IMTYPE_TIFF 22
+		23: '.exr'
+		##define R_IMF_IMTYPE_FFMPEG 24
+		#/* #define R_IMF_IMTYPE_FRAMESERVER    25 */ /* frame server is nomore */
+		##define R_IMF_IMTYPE_CINEON 26
+		##define R_IMF_IMTYPE_DPX 27
+		##define R_IMF_IMTYPE_MULTILAYER 28
+		##define R_IMF_IMTYPE_DDS 29
+		##define R_IMF_IMTYPE_JP2 30
+		##define R_IMF_IMTYPE_H264 31
+		##define R_IMF_IMTYPE_XVID 32
+		##define R_IMF_IMTYPE_THEORA 33
+		##define R_IMF_IMTYPE_PSD 34
+	}
+	return switcher.get(i, \"Invalid\")
+
 output_file = sys.argv[2]
 filepath = sys.argv[1]
 with blendfile.open_blend(filepath) as blend:
@@ -25,15 +54,15 @@ with blendfile.open_blend(filepath) as blend:
 		info['start_frame'] = str(scene[b'r', b'sfra']) # bpy.context.scene.frame_start
 		info['end_frame'] = str(scene[b'r', b'efra']) # bpy.context.scene.frame_end
 		info['step'] = str(scene[b'r', b'frame_step'])
-		#info['output_file_extension'] = str(bpy.context.scene.render.file_extension)
-		info['engine'] = str(scene[b'r', b'engine']) #  bpy.context.scene.render.engine)
+		info['output_file_extension'] = str(imtype_to_file_extension(scene[b'r', b'imtype'])) # bpy.context.scene.render.file_extension)
+		info['engine'] = scene[b'r', b'engine'].decode('utf8') #  bpy.context.scene.render.engine)
 		
 		info['resolution_percentage'] = str(scene[b'r', b'size']) # bpy.context.scene.render.resolution_percentage
 		info['resolution_x'] = str(scene[b'r', b'xsch']) # bpy.context.scene.render.resolution_x
 		info['resolution_y'] = str(scene[b'r', b'ysch']) # bpy.context.scene.render.resolution_y
-		
-		
 		info['framerate'] = str(scene[b'r', b'frs_sec'] / scene[b'r', b'frs_sec_base']) #  bpy.context.scene.render.fps / bpy.context.scene.render.fps_base
+		
+		
 		
 		#if info['engine'] == 'CYCLES':
 		#	info['cycles_samples'] = str(total_samples())
