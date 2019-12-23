@@ -16,20 +16,20 @@ import json
 
 def imtype_to_file_extension(i):
 	switcher={
-		0:'.tga',
-		4:'.jpg',
-		##define R_IMF_IMTYPE_IRIZ 7
-		14: '.tga'
-		15: '.avi'
+		0: '.tga',
+		4: '.jpg',
+		7: '.rgb',
+		14: '.tga',
+		15: '.avi',
 		16: '.avi',
 		17: '.png',
 		20: '.bmp',
-		##define R_IMF_IMTYPE_RADHDR 21
-		22: '.tif'
-		23: '.exr'
+		21: '.hdr',
+		22: '.tif',
+		23: '.exr',
 		26: '.cin',
-		27: '.dpx'
-		28: '.exr'
+		27: '.dpx',
+		28: '.exr',
 		29: '.dds',
 		30: '.jp2',
 		34: '.psd'
