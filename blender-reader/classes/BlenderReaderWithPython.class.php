@@ -19,27 +19,20 @@ def imtype_to_file_extension(i):
 		0:'.tga',
 		4:'.jpg',
 		##define R_IMF_IMTYPE_IRIZ 7
-		##define R_IMF_IMTYPE_RAWTGA 14
-		##define R_IMF_IMTYPE_AVIRAW 15
+		14: '.tga'
+		15: '.avi'
 		16: '.avi',
 		17: '.png',
-		#/* #define R_IMF_IMTYPE_AVICODEC    18 */ /* avicodec is nomore */
-		#/* #define R_IMF_IMTYPE_QUICKTIME   19 */ /* quicktime is nomore */
 		20: '.bmp',
 		##define R_IMF_IMTYPE_RADHDR 21
-		##define R_IMF_IMTYPE_TIFF 22
+		22: '.tif'
 		23: '.exr'
-		##define R_IMF_IMTYPE_FFMPEG 24
-		#/* #define R_IMF_IMTYPE_FRAMESERVER    25 */ /* frame server is nomore */
-		##define R_IMF_IMTYPE_CINEON 26
-		##define R_IMF_IMTYPE_DPX 27
-		##define R_IMF_IMTYPE_MULTILAYER 28
-		##define R_IMF_IMTYPE_DDS 29
-		##define R_IMF_IMTYPE_JP2 30
-		##define R_IMF_IMTYPE_H264 31
-		##define R_IMF_IMTYPE_XVID 32
-		##define R_IMF_IMTYPE_THEORA 33
-		##define R_IMF_IMTYPE_PSD 34
+		26: '.cin',
+		27: '.dpx'
+		28: '.exr'
+		29: '.dds',
+		30: '.jp2',
+		34: '.psd'
 	}
 	return switcher.get(i, \"Invalid\")
 
