@@ -6,8 +6,11 @@ class blendReaderTest extends PHPUnit_Framework_TestCase {
 	private $reader;
 	
 	protected function setUp() {
+		global $config;
+		$config['tmp_dir'] = '/media/sf_tmp/st/';
+		
 		// replace the reader by your
-		$this->reader = new BlendReaderWithLaunchingBlenderBinary('/usr/bin/blender');
+		$this->reader = new BlendReaderWithPython();
 	}
 
 	public function testFileDoesNotExist() {
