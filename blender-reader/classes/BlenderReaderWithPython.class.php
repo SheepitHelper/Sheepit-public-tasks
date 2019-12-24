@@ -55,7 +55,9 @@ with blendfile.open_blend(filepath) as blend:
 		info['resolution_y'] = str(scene[b'r', b'ysch']) # bpy.context.scene.render.resolution_y
 		info['framerate'] = str(scene[b'r', b'frs_sec'] / scene[b'r', b'frs_sec_base']) #  bpy.context.scene.render.fps / bpy.context.scene.render.fps_base
 		
-		
+		for key, value in scene.items():
+			if key == b'camera':
+				info['have_camera'] = value != 0 # print(type(value))
 		
 		#if info['engine'] == 'CYCLES':
 		#	info['cycles_samples'] = str(total_samples())
