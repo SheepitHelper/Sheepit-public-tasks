@@ -9,7 +9,7 @@ require_once(__DIR__.'/BlenderReader.class.php');
 require_once(__DIR__.'/Logger.class.php');
 
 class BlendReaderWithLaunchingBlenderBinary extends BlenderReader {
-	static protected $script28x = "
+	const script28x = "
 import bpy
 import json
 import os
@@ -127,7 +127,7 @@ sys.exit(0)";
 	public function open($path) {
 		$file = @fopen($path, 'r');
 		if (is_resource($file) == false) {
-			Logger::error('BlendReader::open failed to get data from file '.$path.' exists? '.serialize(file_exists($path)).' readable? '.serialize(is_readable($path)));
+			//Logger::error('BlendReader::open failed to get data from file '.$path.' exists? '.serialize(file_exists($path)).' readable? '.serialize(is_readable($path)));
 			return false;
 		}
 		
@@ -161,7 +161,7 @@ sys.exit(0)";
 		global  $config;
 		
 		if ($this->read(7) != 'BLENDER') {
-			Logger::error('BlendReader::getInfos not a blend file');
+			//Logger::error('BlendReader::getInfos not a blend file');
 			return false;
 		}
 		
@@ -174,7 +174,7 @@ sys.exit(0)";
 		
 		$path = str_replace(array(' ', '(', ')',"'"), array('\ ', '\(', '\)','\\\''), $this->path);
 		
-		file_put_contents($script_path, BlendReaderWithLaunchingBlenderBinary::$script28x);
+		file_put_contents($script_path, BlendReaderWithLaunchingBlenderBinary::script28x);
 		$binary = $this->blenderPath;
 		$command = "OUTPUT_FILE=$output_file BLEND_FILE=$path $binary --factory-startup --disable-autoexec -b $path -P $script_path 2>&1";
 		
