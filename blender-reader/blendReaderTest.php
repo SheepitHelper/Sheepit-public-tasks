@@ -515,4 +515,19 @@ class blendReaderTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('CYCLES', $infos['engine']);
 		$this->assertFalse($infos['can_use_tile']);
 	}
+	
+	public function testMissingFile() {
+		$blender_file = __DIR__.'/data/blend/282-missing-files.blend';
+		
+		$this->assertTrue($this->reader->open($blender_file), 'Failed to open blend file '.$blender_file);
+		
+		$infos = $this->reader->getInfos();
+		
+		$this->assertTrue(is_array($infos));
+		$this->assertTrue(array_key_exists('missing_files', $infos));
+		
+		$this->assertTrue(is_array($infos['missing_files']));
+		$this->assertEquals(1, count($infos['missing_files']));
+		$this->assertEquals('//../home/laurent/sheepit-contour.png', $infos['missing_files'][0]);
+	}
 }
