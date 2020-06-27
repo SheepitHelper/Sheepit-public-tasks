@@ -40,6 +40,15 @@ def list_missing_files():
 			pass
 	return ret
 
+def has_active_file_output_node():
+	try:
+		for node in bpy.context.scene.node_tree.nodes:
+			if not node.mute and type(node) == bpy.types.CompositorNodeOutputFile or node.type == 'OUTPUT_FILE':
+				return True
+	except:
+		pass
+	return False
+
 def can_use_tile():
 	use_denoising = False
 	for layer in bpy.context.scene.view_layers:
@@ -101,6 +110,7 @@ info['can_use_tile'] = str(can_use_tile())
 info['missing_files'] = list_missing_files()
 info['have_camera'] = bpy.context.scene.camera != None
 info['scripted_driver'] = str(list_scripted_driver())
+info['has_active_file_output_node'] = has_active_file_output_node()
 
 if info['engine'] == 'CYCLES':
 	info['cycles_samples'] = str(total_samples())

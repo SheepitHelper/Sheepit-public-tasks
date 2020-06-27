@@ -530,4 +530,28 @@ class blendReaderTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, count($infos['missing_files']));
 		$this->assertEquals('//../home/laurent/sheepit-contour.png', $infos['missing_files'][0]);
 	}
+
+	public function testDetectsActiveFileOutputNodes() {
+		$blender_file = __DIR__.'/data/blend/creating-images-outside-of-working-dir.blend';
+
+		$this->assertTrue($this->reader->open($blender_file), 'Failed to open blend file '.$blender_file);
+
+		$infos = $this->reader->getInfos();
+
+		$this->assertTrue(is_array($infos));
+		$this->assertTrue(array_key_exists('has_active_file_output_node', $infos));
+		$this->assertTrue($infos['has_active_file_output_node']);
+	}
+
+	public function testDetectsActiveFileOutputNodesFalse() {
+		$blender_file = __DIR__.'/data/blend/274-cycles-200x100-100pcstart1-end250-compressed.blend';
+
+		$this->assertTrue($this->reader->open($blender_file), 'Failed to open blend file '.$blender_file);
+
+		$infos = $this->reader->getInfos();
+
+		$this->assertTrue(is_array($infos));
+		$this->assertTrue(array_key_exists('has_active_file_output_node', $infos));
+		$this->assertFalse($infos['has_active_file_output_node']);
+	}
 }
